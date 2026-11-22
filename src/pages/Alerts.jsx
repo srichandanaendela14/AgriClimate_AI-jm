@@ -177,7 +177,7 @@ function AlertsContent({ data, onRefresh }) {
         <Card className="lg:col-span-2">
           <div className="mb-3 flex items-center justify-between gap-2">
             <CardTitle icon={ShieldAlert}>Upcoming hazards (next 48 hours)</CardTitle>
-            <button type="button" className={`${buttonSecondary} mb-3 px-3 py-1.5`} onClick={checkNow} disabled={checking}>
+            <button type="button" className={`${buttonSecondary} mb-3 shrink-0 whitespace-nowrap px-3 py-1.5`} onClick={checkNow} disabled={checking}>
               <RefreshCw className={`size-4 ${checking ? 'animate-spin' : ''}`} aria-hidden="true" />
               Check now
             </button>

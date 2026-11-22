@@ -1,7 +1,7 @@
 """AgriClimate AI - Flask REST API."""
 import os
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 import push
@@ -281,6 +281,23 @@ def push_test():
     if delivered == 0:
         return jsonify({"error": "No subscribed devices. Enable notifications first."}), 400
     return jsonify({"ok": True, "delivered": delivered})
+
+
+DIST_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "dist")
+
+
+@app.get("/", defaults={"path": ""})
+@app.get("/<path:path>")
+def frontend(path):
+    """In production, serve the built React app (run `npm run build` first)."""
+    if path.startswith("api/"):
+        return jsonify({"error": "Not found"}), 404
+    if not os.path.isdir(DIST_DIR):
+        return jsonify({"message": "AgriClimate AI API is running. Start the React app with `npm run dev`."})
+    file_path = os.path.join(DIST_DIR, path)
+    if path and os.path.isfile(file_path):
+        return send_from_directory(DIST_DIR, path)
+    return send_from_directory(DIST_DIR, "index.html")
 
 
 init_db()
