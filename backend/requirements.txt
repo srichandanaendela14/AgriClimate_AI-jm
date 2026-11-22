@@ -1,0 +1,4 @@
+flask==3.1.*
+flask-cors==6.*
+requests==2.*
+pywebpush==2.*
